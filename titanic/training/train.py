@@ -24,14 +24,15 @@ ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
 from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_squared_error, r2_score,
-    precision_recall_curve
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import precision_recall_curve
 from sklearn.model_selection import train_test_split
 from sklearn.impute import KNNImputer, SimpleImputer, IterativeImputer
 from sklearn.pipeline import make_pipeline
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler,
-    RobustScaler, Normalizer, MaxAbsScaler, OneHotEncoder
+from sklearn.preprocessing import RobustScaler, Normalizer, MaxAbsScaler
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.svm import SVC
 import joblib
 import os
