@@ -48,8 +48,10 @@ def init():
 
 
 input_sample = numpy.array([
-    [1, 0, 3, 'Braund, Mr. Owen Harris', 'male', 22.0, 1, 0, 'A/5 21171', 7.2500, 'C85', 'S'],
-    [3, 1, 3, 'Heikkinen, Miss. Laina', 'female', 26.0, 0, 0, 'STON/O2. 3101282', 7.9250, 'C123', 'S']])
+    [1, 0, 3, 'Braund, Mr. Owen Harris', 'male',
+    22.0, 1, 0, 'A/5 21171', 7.2500, 'C85', 'S'],
+    [3, 1, 3, 'Heikkinen, Miss. Laina', 'female', 26.0, 0, 0, 
+    'STON/O2. 3101282', 7.9250, 'C123', 'S']])
 output_sample = numpy.array([
     0,
     1])
@@ -85,6 +87,9 @@ def run(data, request_headers):
 if __name__ == "__main__":
     # Test scoring
     init()
-    test_row = '{"data":[[1, 0, 3, "Braund, Mr. Owen Harris", "male", 22.0, 1, 0, "A/5 21171", 7.2500, "C85", "S"],[3, 1, 3, "Heikkinen, Miss. Laina", "female", 26.0, 0, 0, "STON/O2. 3101282", 7.9250, "C123", "S"]]}'
+    test_row = """{"data":[[1, 0, 3, "Braund, Mr. Owen Harris", "male", 22.0,
+    1, 0, "A/5 21171", 7.2500, "C85", "S"], [3, 1, 3,
+    "Heikkinen, Miss. Laina", "female", 26.0, 0, 0, "STON/O2. 3101282",
+    7.9250, "C123", "S"]]}"""
     prediction = run(test_row, {})
     print("Test result: ", prediction)
