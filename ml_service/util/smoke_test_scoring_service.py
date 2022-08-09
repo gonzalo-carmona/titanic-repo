@@ -7,8 +7,8 @@ from ml_service.util.env_variables import Env
 import secrets
 
 
-input = {"data": [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                  [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]]}
+input = {"data":[[1, 0, 3, "Braund, Mr. Owen Harris", "male", 22.0, 1, 0, "A/5 21171", 7.2500, "C85", "S"],
+                [3, 1, 3, "Heikkinen, Miss. Laina", "female", 26.0, 0, 0, "STON/O2. 3101282", 7.9250, "C123", "S"]]}
 output_len = 2
 
 
