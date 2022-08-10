@@ -23,8 +23,10 @@ def init():
             'Parch', 'Fare', 'Cabin', 'Embarked']
 
 
-def test_directional_model():  # Females survive more than males
+init()
 
+
+def test_directional_model():  # Females survive more than males
     X_1 = pd.DataFrame(
         np.array([[1, 'male', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns=cols
     )
