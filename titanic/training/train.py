@@ -30,7 +30,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.impute import KNNImputer, SimpleImputer, IterativeImputer
 from sklearn.pipeline import make_pipeline
 from sklearn.compose import make_column_transformer
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler,
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler
 from sklearn.preprocessing import RobustScaler, Normalizer, MaxAbsScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.svm import SVC
@@ -56,8 +56,11 @@ def cabin_transform_impute(data):  # Efectúa la transformación de Cabin...
 
     data['Cabin'] = data['Cabin'].apply(cabin_transformer)
 
-    data_cabin = pd.DataFrame({'Pclass': X_data['Pclass'],
-        'Fare': X_data['Fare'], 'Cabin': X_data['Cabin']})
+    data_cabin = pd.DataFrame(
+        {'Pclass': X_data['Pclass'],
+         'Fare': X_data['Fare'],
+         'Cabin': X_data['Cabin']}
+         )
 
     imputer = KNNImputer(n_neighbors=5)  # ... e imputa los datos que
     # faltan con Knn.
@@ -78,7 +81,7 @@ def split_data(data):
     X_data = remove_columns(data['X_data'])
     y_data = data['y_data']
 
-    X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, 
+    X_train, X_test, y_train, y_test = train_test_split(X_data, y_data,
                                                         random_state=42)
     data = {"train": {"X": X_train, "y": y_train},
             "test": {"X": X_test, "y": y_test}}
@@ -89,18 +92,24 @@ def split_data(data):
 def train_model(data, SVC_args):
 
     # Pipelines de transformación previa
-    age_pipeline = make_pipeline(IterativeImputer(
-        estimator=RandomForestClassifier(), max_iter=10),
-        MinMaxScaler(feature_range=(0, 1)))
-    fare_pipeline = make_pipeline(SimpleImputer(strategy="mean"),
-        MinMaxScaler(feature_range=(0, 1)))
+    age_pipeline = make_pipeline(
+        IterativeImputer(estimator=RandomForestClassifier(), max_iter=10),
+        MinMaxScaler(feature_range=(0, 1))
+        )
+    fare_pipeline = make_pipeline(
+        SimpleImputer(strategy="mean"),
+        MinMaxScaler(feature_range=(0, 1))
+        )
     cabin_pipeline = make_pipeline(MinMaxScaler(feature_range=(0, 1)))
     categorical_pipeline = make_pipeline(
-        OneHotEncoder(dtype=int, sparse=False), KNNImputer(n_neighbors=5))
+        OneHotEncoder(dtype=int, sparse=False), KNNImputer(n_neighbors=5)
+        )
     preprocessor = make_column_transformer(
-        [(categorical_pipeline, ['Pclass', 'Sex', 'SibSp', 'Parch', 'Embarked']),
-        (age_pipeline, ['Age']), (fare_pipeline, ['Fare']),
-        (cabin_pipeline, ['Cabin'])], remainder='drop')
+        [(categorical_pipeline, ['Pclass', 'Sex', 'SibSp',
+                                 'Parch', 'Embarked']),
+         (age_pipeline, ['Age']), (fare_pipeline, ['Fare']),
+         (cabin_pipeline, ['Cabin'])], remainder='drop'
+        )
     svc = SVC(C=SVC_args["C"], probability=True)
     final_pipeline = make_pipeline(preprocessor, svc)
     pipe = final_pipeline.fit(
