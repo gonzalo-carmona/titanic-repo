@@ -1,9 +1,7 @@
 import numpy as np
 import pandas as pd
 from titanic.training.train import get_model_metrics, train_model, split_data
-import joblib
 import os
-from azureml.core.model import Model
 
 
 def test_directional_model():  # Females survive more than males
@@ -11,6 +9,10 @@ def test_directional_model():  # Females survive more than males
     # Define training parameters
     SVC_args = {"C": 112.884}
 
+    global cols
+
+    cols = ['Pclass', 'Sex', 'Age', 'SibSp',
+            'Parch', 'Fare', 'Cabin', 'Embarked']
     # Load the training data as dataframe
     data_dir = "data"
     data_file = os.path.join(data_dir, 'data.csv')
