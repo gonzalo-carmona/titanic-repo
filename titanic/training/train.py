@@ -106,10 +106,10 @@ def train_model(data, SVC_args):
         OneHotEncoder(dtype=int, sparse=False), KNNImputer(n_neighbors=5)
         )
     preprocessor = make_column_transformer(
-        [(categorical_pipeline, ['Pclass', 'Sex', 'SibSp',
-                                 'Parch', 'Embarked']),
-         (age_pipeline, ['Age']), (fare_pipeline, ['Fare']),
-         (cabin_pipeline, ['Cabin'])], remainder='drop'
+        (categorical_pipeline, ['Pclass', 'Sex', 'SibSp',
+                                'Parch', 'Embarked']),
+        (age_pipeline, ['Age']), (fare_pipeline, ['Fare']),
+        (cabin_pipeline, ['Cabin']), remainder='drop'
         )
     svc = SVC(C=SVC_args["C"], probability=True)
     final_pipeline = make_pipeline(preprocessor, svc)
