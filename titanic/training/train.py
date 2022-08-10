@@ -38,6 +38,9 @@ import os
 import pandas as pd
 
 
+silencer = enable_iterative_imputer
+
+
 def cabin_transformer(x):  # Función que transforma los
     # datos de la columna cabin
     if pd.isnull(x):
@@ -135,7 +138,7 @@ def main():
 
     # Load the training data as dataframe
     data_dir = "data"
-    data_file = os.path.join(data_dir, 'data.csv')
+    data_file = os.path.join(data_dir, 'train.csv')
     data = pd.read_csv(data_file)
 
     data = split_data(data)

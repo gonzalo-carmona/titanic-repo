@@ -15,7 +15,7 @@ def test_directional_model():  # Females survive more than males
             'Parch', 'Fare', 'Cabin', 'Embarked']
     # Load the training data as dataframe
     data_dir = "data"
-    data_file = os.path.join(data_dir, 'data.csv')
+    data_file = os.path.join(data_dir, 'train.csv')
     data = pd.read_csv(data_file)
 
     data = split_data(data)
