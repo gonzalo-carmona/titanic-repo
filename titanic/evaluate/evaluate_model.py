@@ -99,7 +99,7 @@ if (args.run_id is not None):
 if (run_id == 'amlcompute'):
     run_id = run.parent.id
 model_name = args.model_name
-metric_eval = "r2"
+metric_eval = "precision"
 
 allow_run_cancel = args.allow_run_cancel
 # Parameterize the matrices on which the models should be compared
@@ -115,14 +115,14 @@ try:
                 aml_workspace=ws)
 
     if (model is not None):
-        production_model_r2 = 10000
+        production_model_precision = 0
         if (metric_eval in model.tags):
-            production_model_r2 = float(model.tags[metric_eval])
+            production_model_precision = float(model.tags[metric_eval])
         try:
-            new_model_r2 = float(run.parent.get_metrics().get(metric_eval))
+            new_model_precision = float(run.parent.get_metrics().get(metric_eval))
         except TypeError:
-            new_model_r2 = None
-        if (production_model_r2 is None or new_model_r2 is None):
+            new_model_precision = None
+        if (production_model_precision is None or new_model_precision is None):
             print("Unable to find ", metric_eval, " metrics, "
                   "exiting evaluation")
             if((allow_run_cancel).lower() == 'true'):
@@ -130,13 +130,13 @@ try:
         else:
             print(
                 "Current Production model {}: {}, ".format(
-                    metric_eval, production_model_r2) +
+                    metric_eval, production_model_precision) +
                 "New trained model {}: {}".format(
-                    metric_eval, new_model_r2
+                    metric_eval, new_model_precision
                 )
             )
 
-        if (new_model_r2 > production_model_r2):
+        if (new_model_precision > production_model_precision):
             print("New trained model performs better, "
                   "thus it should be registered")
         else:

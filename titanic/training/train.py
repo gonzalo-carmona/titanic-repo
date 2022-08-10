@@ -23,7 +23,7 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-from sklearn.metrics import r2_score
+from sklearn.metrics import precision_score
 from sklearn.model_selection import train_test_split
 from sklearn.impute import KNNImputer, SimpleImputer, IterativeImputer
 from sklearn.pipeline import make_pipeline
@@ -120,9 +120,9 @@ def get_model_metrics(model, data):
 
     preds = model.predict(data["test"]["X"])
 
-    # R2
-    r2 = r2_score(data["test"]["y"], preds)
-    metrics = {"r2": r2}
+    # Precision
+    pre = precision_score(data["test"]["y"], preds)
+    metrics = {"precision": pre}
     return metrics
 
 
