@@ -1,32 +1,25 @@
 import numpy as np
 import pandas as pd
-from titanic.training.train import get_model_metrics
+from titanic.training.train import get_model_metrics, train_model, split_data
 import joblib
 import os
 from azureml.core.model import Model
 
 
-def init():
-    # load the model from file into a global object
-    global model
-    global cols
-    # we assume that we have just one model
-    # AZUREML_MODEL_DIR is an environment variable created during deployment.
-    # It is the path to the model folder
-    # (./azureml-models/$MODEL_NAME/$VERSION)
-    model_path = Model.get_model_path(
-        os.getenv("AZUREML_MODEL_DIR").split('/')[-2])
-
-    model = joblib.load(model_path)
-
-    cols = ['Pclass', 'Sex', 'Age', 'SibSp',
-            'Parch', 'Fare', 'Cabin', 'Embarked']
-
-
-init()
-
-
 def test_directional_model():  # Females survive more than males
+
+    # Define training parameters
+    SVC_args = {"C": 112.884}
+
+    # Load the training data as dataframe
+    data_dir = "data"
+    data_file = os.path.join(data_dir, 'data.csv')
+    data = pd.read_csv(data_file)
+
+    data = split_data(data)
+
+    model = train_model(data, SVC_args)
+
     X_1 = pd.DataFrame(
         np.array([[1, 'male', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns=cols
     )
