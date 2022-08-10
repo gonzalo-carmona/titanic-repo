@@ -12,7 +12,7 @@ input = {"data": [[1, 0, 3, "Braund, Mr. Owen Harris", "male", 22.0, 1, 0,
                   [3, 1, 3, "Heikkinen, Miss. Laina",
                    "female", 26.0, 0, 0, "STON/O2. 3101282",
                    7.9250, "C123", "S"]]}
-output_len = 2  
+output_len = 2
 
 
 def call_web_service(e, service_type, service_name):
