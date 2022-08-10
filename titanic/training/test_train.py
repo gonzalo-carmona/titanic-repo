@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 from titanic.training.train import get_model_metrics
 import joblib
+import os
+from azureml.core.model import Model
+
 
 def init():
     # load the model from file into a global object
@@ -17,16 +20,17 @@ def init():
     model = joblib.load(model_path)
 
     cols = ['Pclass', 'Sex', 'Age', 'SibSp',
-               'Parch', 'Fare', 'Cabin', 'Embarked']
+            'Parch', 'Fare', 'Cabin', 'Embarked']
 
-def test_directional_model(): # Females survive more than males
+
+def test_directional_model():  # Females survive more than males
 
     X_1 = pd.DataFrame(
-        np.array([[1, 'male', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns = cols
+        np.array([[1, 'male', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns=cols
     )
 
     X_2 = pd.DataFrame(
-        np.array([[1, 'female', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns
+        np.array([[1, 'female', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns=cols
     )
 
     y_1 = model.predict_proba(X_1)
@@ -34,17 +38,18 @@ def test_directional_model(): # Females survive more than males
 
     assert y_1[0][0] > y_2[0][0]
 
+
 def test_get_model_metrics():
 
     class MockModel:
 
         @staticmethod
         def predict(data):
-            return (np.array([0,1]))
+            return (np.array([0, 1]))
 
     X_test = pd.DataFrame(
         np.array([[1, 'male', 32.0, 1, 1, 53.5, 3.0, 'S'],
-                  [1, 'female', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns = cols
+                  [1, 'female', 32.0, 1, 1, 53.5, 3.0, 'S']]), columns=cols
     )
 
     y_test = np.array([0, 1])

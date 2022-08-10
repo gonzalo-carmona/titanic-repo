@@ -119,7 +119,9 @@ try:
         if (metric_eval in model.tags):
             production_model_precision = float(model.tags[metric_eval])
         try:
-            new_model_precision = float(run.parent.get_metrics().get(metric_eval))
+            new_model_precision = float(
+                run.parent.get_metrics().get(metric_eval)
+                )
         except TypeError:
             new_model_precision = None
         if (production_model_precision is None or new_model_precision is None):
