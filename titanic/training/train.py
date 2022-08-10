@@ -23,21 +23,18 @@ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.impute import KNNImputer, SimpleImputer, IterativeImputer
 from sklearn.pipeline import make_pipeline
 from sklearn.compose import make_column_transformer
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler
-from sklearn.preprocessing import RobustScaler, Normalizer, MaxAbsScaler
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
 import joblib
 import os
 import pandas as pd
-import numpy as np
 
 
 def cabin_transformer(x):  # Función que transforma los
@@ -138,9 +135,7 @@ def main():
     # Load the training data as dataframe
     data_dir = "data"
     data_file = os.path.join(data_dir, 'data.csv')
-    test_file = os.path.join(data_dir, 'test.csv')
     data = pd.read_csv(data_file)
-    test = pd.read_csv(test_file)
 
     data = split_data(data)
 
