@@ -55,7 +55,7 @@ def cabin_transform_impute(data):  # Efectúa la transformación de Cabin...
     y_data = pd.DataFrame(data['Survived'])
     X_data = data.drop('Survived', inplace=False, axis=1)
 
-    data['Cabin'] = data['Cabin'].apply(cabin_transformer)
+    X_data['Cabin'] = X_data['Cabin'].apply(cabin_transformer)
 
     data_cabin = pd.DataFrame(
         {'Pclass': X_data['Pclass'],
