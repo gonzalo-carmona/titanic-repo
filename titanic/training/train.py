@@ -104,9 +104,9 @@ def train_model(data, SVC_args):
         )
     cabin_pipeline = make_pipeline(MinMaxScaler(feature_range=(0, 1)))
     categorical_pipeline = make_pipeline(
+        SimpleImputer(strategy='most_frequent'),
         OneHotEncoder(dtype=int, sparse=False,
-                      handle_unknown='ignore'),
-        KNNImputer(n_neighbors=5)
+                      handle_unknown='ignore')
         )
     preprocessor = make_column_transformer(
         (categorical_pipeline, ['Pclass', 'Sex', 'SibSp',
