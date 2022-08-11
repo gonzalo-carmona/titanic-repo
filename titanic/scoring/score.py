@@ -24,6 +24,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
 import numpy
+import pandas
 import joblib
 import os
 from azureml.core.model import Model
@@ -31,6 +32,7 @@ from inference_schema.schema_decorators \
     import input_schema, output_schema
 from inference_schema.parameter_types.numpy_parameter_type \
     import NumpyParameterType
+from titanic.training.train import cabin_transformer, remove_columns
 
 
 def init():
@@ -46,12 +48,16 @@ def init():
 
     model = joblib.load(model_path)
 
-
-input_sample = numpy.array([
-    [1, 0, 3, 'Braund, Mr. Owen Harris', 'male',
+input_sample = pandas.DataFrame(
+    numpy.array([
+    [1, 3, 'Braund, Mr. Owen Harris', 'male',
         22.0, 1, 0, 'A/5 21171', 7.2500, 'C85', 'S'],
-    [3, 1, 3, 'Heikkinen, Miss. Laina', 'female', 26.0, 0, 0,
-        'STON/O2. 3101282', 7.9250, 'C123', 'S']])
+    [3, 3, 'Heikkinen, Miss. Laina', 'female', 26.0, 0, 0,
+        'STON/O2. 3101282', 7.9250, 'C123', 'S']]),
+    columns = ['PassengerId', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
+               'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+)
+
 output_sample = numpy.array([
     0,
     1])
@@ -63,6 +69,8 @@ output_sample = numpy.array([
 @input_schema('data', NumpyParameterType(input_sample))
 @output_schema(NumpyParameterType(output_sample))
 def run(data, request_headers):
+    data['Cabin'] = data['Cabin'].map(cabin_transformer)
+    data = remove_columns(data)
     result = model.predict(data)
 
     # Demonstrate how we can log custom data into the Application Insights
@@ -87,9 +95,10 @@ def run(data, request_headers):
 if __name__ == "__main__":
     # Test scoring
     init()
-    test_row = """{"data":[[1, 0, 3, "Braund, Mr. Owen Harris", "male", 22.0,
-    1, 0, "A/5 21171", 7.2500, "C85", "S"], [3, 1, 3,
-    "Heikkinen, Miss. Laina", "female", 26.0, 0, 0, "STON/O2. 3101282",
-    7.9250, "C123", "S"]]}"""
+    test_row_1 = "{'data':[[1, 3, 'Braund, Mr. Owen Harris', 'male', 22.0,"
+    test_row_2 = " 1, 0, 'A/5 21171', 7.2500, 'C85', 'S'], [3, 3, 'Heikkin"
+    test_row_3 = "en, Miss. Laina', 'female', 26.0, 0, 0, 'STON/O2. 3101282'"
+    test_row_4 = ", 7.9250, 'C123', 'S']]}"
+    test_row = test_row_1 + test_row_2 + test_row_3 + test_row_4
     prediction = run(test_row, {})
     print("Test result: ", prediction)
