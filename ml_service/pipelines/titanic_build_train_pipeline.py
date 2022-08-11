@@ -65,9 +65,7 @@ def main():
         create_sample_data_csv()
 
         # Use a CSV to read in the data set.
-        data_dir_1 = "C:\\Users\\gonzalo.carmona\\Desktop\\Productivizacion"
-        data_dir_2 = "\\titanic_intento2\\titanic-repo\\data\\train.csv"
-        file_name = data_dir_1 + data_dir_2
+        file_name = 'train.csv'
 
         if not os.path.exists(file_name):
             raise Exception(
