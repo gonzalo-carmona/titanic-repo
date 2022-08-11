@@ -70,7 +70,8 @@ def cabin_transform_impute(data):  # Efectúa la transformación de Cabin...
 
 
 def remove_columns(X_data):  # Elimina columnas que no usaremos en el modelo
-    X_data = X_data.drop(['PassengerId', 'Name', 'Ticket'], axis=1, inplace=False)
+    X_data = X_data.drop(['PassengerId', 'Name', 'Ticket'], axis=1,
+                         inplace=False)
     return X_data
 
 
