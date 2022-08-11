@@ -1,7 +1,7 @@
 {
     "training":
     {
-        "alpha": 0.4
+        "C": 112.884
     },
     "evaluation":
     {
@@ -9,7 +9,7 @@
     },
     "registration":
     {
-        "tags": ["mse"]
+        "tags": ["precision"]
     },
     "scoring":
     {
