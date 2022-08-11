@@ -65,7 +65,7 @@ def main():
         create_sample_data_csv()
 
         # Use a CSV to read in the data set.
-        file_name = "train.csv"
+        file_name = "LocalUpload/849fe656159d5af571696d7d06f7b1f2/data/train.csv"
 
         if not os.path.exists(file_name):
             raise Exception(
