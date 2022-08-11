@@ -66,7 +66,7 @@ def main():
 
         # Use a CSV to read in the data set.
         file_name = """
-            C:\\users\\gonzalo.carmona\\Desktop\\Productivizacion\\
+            C:\\Users\\gonzalo.carmona\\Desktop\\Productivizacion\\
             titanic_intento2\\titanic-repo\\data\\train.csv
             """
 
