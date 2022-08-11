@@ -66,7 +66,8 @@ def main():
 
         # Use a CSV to read in the data set.
         file_name = """
-            LocalUpload/849fe656159d5af571696d7d06f7b1f2/data/train.csv
+            C:\\users\\gonzalo.carmona\\Desktop\\Productivizacion\\
+            titanic_intento2\\titanic-repo\\data\\train.csv
             """
 
         if not os.path.exists(file_name):
