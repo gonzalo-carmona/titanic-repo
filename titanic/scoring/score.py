@@ -32,7 +32,22 @@ from inference_schema.schema_decorators \
     import input_schema, output_schema
 from inference_schema.parameter_types.numpy_parameter_type \
     import NumpyParameterType
-from titanic.training.train import cabin_transformer, remove_columns
+
+
+def cabin_transformer(x):  # Función que transforma los
+    # datos de la columna cabin
+    if pd.isnull(x):
+        return
+    else:
+        z = str(x)
+        d = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'T': 8}
+        return d[z[0]]
+
+
+def remove_columns(X_data):  # Elimina columnas que no usaremos en el modelo
+    X_data = X_data.drop(['PassengerId', 'Name', 'Ticket'], axis=1,
+                         inplace=False)
+    return X_data
 
 
 def init():
