@@ -66,7 +66,7 @@ output_sample = numpy.array([
 @input_schema('data', NumpyParameterType(input_sample))
 @output_schema(NumpyParameterType(output_sample))
 def run(data, request_headers):
-    data = pd.DataFrame(data, columns=[
+    data = pandas.DataFrame(data, columns=[
         'PassengerId', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
         'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'
     ])
