@@ -49,15 +49,11 @@ def init():
     model = joblib.load(model_path)
 
 
-input_sample = pandas.DataFrame(
-    numpy.array([
-        [1, 3, 'Braund, Mr. Owen Harris', 'male',
-         22.0, 1, 0, 'A/5 21171', 7.2500, 'C85', 'S'],
-        [3, 3, 'Heikkinen, Miss. Laina', 'female', 26.0, 0, 0,
-         'STON/O2. 3101282', 7.9250, 'C123', 'S']]),
-    columns=['PassengerId', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
-             'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
-)
+input_sample = numpy.array([
+    [1, 3, 'Braund, Mr. Owen Harris', 'male',
+     22.0, 1, 0, 'A/5 21171', 7.2500, 'C85', 'S'],
+    [3, 3, 'Heikkinen, Miss. Laina', 'female', 26.0, 0, 0,
+     'STON/O2. 3101282', 7.9250, 'C123', 'S']])
 
 output_sample = numpy.array([
     0,
@@ -70,6 +66,10 @@ output_sample = numpy.array([
 @input_schema('data', NumpyParameterType(input_sample))
 @output_schema(NumpyParameterType(output_sample))
 def run(data, request_headers):
+    data = pd.DataFrame(data, columns=[
+        'PassengerId', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
+        'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'
+    ])
     data['Cabin'] = data['Cabin'].map(cabin_transformer)
     data = remove_columns(data)
     result = model.predict(data)
