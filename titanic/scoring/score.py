@@ -27,6 +27,7 @@ import numpy
 import pandas
 import joblib
 import os
+import pandas as pd
 from azureml.core.model import Model
 from inference_schema.schema_decorators \
     import input_schema, output_schema
@@ -81,7 +82,7 @@ output_sample = numpy.array([
 @input_schema('data', NumpyParameterType(input_sample))
 @output_schema(NumpyParameterType(output_sample))
 def run(data, request_headers):
-    data = pandas.DataFrame(data, columns=[
+    data = pd.DataFrame(data, columns=[
         'PassengerId', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
         'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'
     ])
