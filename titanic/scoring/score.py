@@ -26,9 +26,9 @@ POSSIBILITY OF SUCH DAMAGE.
 import numpy
 import pandas
 import joblib
-import os
+# import os
 import pandas as pd
-from azureml.core.model import Model
+# from azureml.core.model import Model
 from inference_schema.schema_decorators \
     import input_schema, output_schema
 from inference_schema.parameter_types.numpy_parameter_type \
@@ -54,7 +54,7 @@ def remove_columns(X_data):  # Elimina columnas que no usaremos en el modelo
 def init():
     # load the model from file into a global object
     global model
-    
+
     # we assume that we have just one model
     # AZUREML_MODEL_DIR is an environment variable created during deployment.
     # It is the path to the model folder
